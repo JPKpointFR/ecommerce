@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div>
+        <form action="{% url 'shop' %}" method="get">
+            <div>
+                <input placeholder="look for a product" type="search" name="item-name" value="{{ item_name }}">
+                <button type="submit">search</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    {% for product in shop_products %}
+    {% if item_name and item_name not in product.name %}
+    <p>this product does not exist</p>
+    {% else %}
+    <div>
+        <div class="card">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{product.name}}" class="card-img-top">
+            {% else %}
+            <h3>no image</h3>
+            {% endif %}
+            <div class="card-body">
+                <div class="card-title">{{ product.name }}</div>
+                <div class="card-text">{{ product.price }} €</div>
+                <a href="" class="btn btn-success">buy now</a>
+                <a href="" class="btn btn-primary">add to cart</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+
+{% endblock content %}
