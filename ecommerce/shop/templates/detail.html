@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div>
+        <img src="{{ shop_products.image.url }}" alt="{{shop_products.name}}">
+    </div>
+    <div>{{shop_products.name}}</div>
+    <div>{{shop_products.price}} €</div>
+    <div>{{shop_products.description}}</div>
+    <div><a href=""><button> buy </button></a></div>
+    <div><button> add to cart </button></div>
+</div>
+{% endblock content %}

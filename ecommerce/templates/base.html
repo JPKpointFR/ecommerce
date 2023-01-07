@@ -7,18 +7,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KINI</title>
 </head>
-<div class='container'>
-<div class='navbar'>
+
+<body>
     <nav>
+        <a href="{% url 'shop' %}">
+            <h1>KINI</h1>
+        </a>
+        {% if user.is_authenticated %}
+        <p>{{user.username}}</p>
+
+        <a href="{% url 'logout' %}">
+            <h4>logout</h4>
+        </a>
+        {% else %}
+        <a href="{% url 'login' %}">
+            <h4>login</h4>
+        </a>
+        <a href="{% url 'signup' %}">
+            <h4>sign up</h4>
+        </a>
+        {% endif %}
     </nav>
-</div>
 
 
     {% block content %}
     {% endblock content %}
-</div>
-
-<body>
 
 </body>
 
