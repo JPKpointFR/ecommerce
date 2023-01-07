@@ -32,8 +32,7 @@
                 <div class="card-text">
                     {{ product.price }} €
                 </div>
-                <button> buy now </button>
-                <button> add to cart </button>
+                <a href="{% url 'add-to-cart' product.slug %}"><button> add to cart </button></a>
             </div>
         </div>
     </div>
