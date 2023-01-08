@@ -11,11 +11,11 @@ class AdminProduct(admin.ModelAdmin):
 
 
 class AdminOrder(admin.ModelAdmin):
-    list_display = ('product', 'quantity', 'created_at',)
+    list_display = ('product', 'quantity', 'ordered_date',)
 
 
 class AdminCart(admin.ModelAdmin):
-    list_display = ('user', 'ordered',)
+    list_display = ('user',)
 
 
 # Register your models here.

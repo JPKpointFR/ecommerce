@@ -27,6 +27,12 @@
             <h4>sign up</h4>
         </a>
         {% endif %}
+
+        {% if user.cart %}
+        <a href="{% url 'cart' %}">
+            <h2>CART({{ user.cart.orders.count }})</h2>
+        </a>
+        {% endif %}
     </nav>
 
 

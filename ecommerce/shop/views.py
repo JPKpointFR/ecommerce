@@ -30,7 +30,8 @@ def add_to_cart(request, product_slug):
     user = request.user
     product = get_object_or_404(Product, slug=product_slug)
     cart, _ = Cart.objects.get_or_create(user=user)
-    order, created = Order.objects.get_or_create(user=user, product=product)
+    order, created = Order.objects.get_or_create(
+        user=user, ordered=False, product=product)
 
     if created:
         cart.orders.add(order)
@@ -42,3 +43,15 @@ def add_to_cart(request, product_slug):
     # Redirigez l'utilisateur vers la page actuelle
     current_url = request.META.get('HTTP_REFERER')
     return redirect(current_url)
+
+
+def cart(request):
+    cart = get_object_or_404(Cart, user=request.user)
+    return render(request, 'cart.html', context={'orders': cart.orders.all()})
+
+
+def delete_cart(request):
+    # cart = request.user.cart
+    if cart := request.user.cart:
+        cart.delete()
+    return redirect('shop')
