@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1> Login page </h1>
-<form action="POST">
+<form method="POST">
     {% csrf_token %}
     <p>
         <label for="username">username</label>

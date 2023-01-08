@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load  calculate %}
+  <h1>Checkout</h1>
+  <form method="post" action="{% url 'checkout' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <table>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+      </tr>
+      {% for order in orders %}
+      <tr>
+        <td>{{ order.product.name }}</td>
+        <td>{{ order.quantity }}</td>
+        <td>{{ order.product.price }}</td>
+        <td>{{ order.product.price|multiply:order.quantity }}</td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <td colspan="3">Total:</td>
+        <td>{{ total }}</td>
+      </tr>
+    </table>
+    <input type="submit" value="Place Order">
+  </form>
+{% endblock %}

@@ -5,10 +5,25 @@
 {% for order in orders %}
 <div>
     <h2>{{order.product.name}}</h2>
+    <div>
+        <img src="{{ order.product.image.url }}" alt="{{shop_products.name}}">
+    </div>
     <p> quantity: {{ order.quantity }} </p>
 </div>
+<form method="post" action="{% url 'update_cart' order.product.slug %}">
+    {% csrf_token %}
+    <input type="number" name="quantity" value="{{ order.quantity }}" min="1">
+    <button type="submit">Update</button>
+</form>
+<form method="post" action="{% url 'delete_from_cart' order.product.slug %}"
+    onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce produit de votre panier?');">
+    {% csrf_token %}
+    <input type="hidden" name="product_slug" value="{{ order.product.slug }}">
+    <button type="submit">Delete</button>
+</form>
 {% endfor %}
 
-<a href="{% url 'delete_cart' %}">DELETE CART</a>
+<a href="{% url 'checkout' %}"><button>Ordered</button></a>
+<a href="{% url 'delete_cart' %}"><button>DELETE CART</button></a>
 
 {% endblock %}

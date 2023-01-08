@@ -42,13 +42,32 @@ class Product(models.Model):
         return reverse('product-detail', kwargs={'product_slug': self.slug})
 
 
-"""
-Article(Order):
-- Utilisateur
-- Produit
-- Quantité
-- Commandé ou non
-"""
+ADDRESS_CHOICES = [
+    ('B', 'Billing'),
+    ('S', 'Shipping'),
+]
+
+
+class Address(models.Model):
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
+    street_address = models.CharField(max_length=100)
+    apartment_address = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
+    zip = models.CharField(max_length=100)
+    address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES)
+    default = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        verbose_name_plural = 'Addresses'
+
+
+PAYMENT_CHOICES = [
+    ('stripe', 'Stripe'),
+    ('paypal', 'Paypal'),
+]
 
 
 class Order(models.Model):
@@ -57,6 +76,12 @@ class Order(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     ordered = models.BooleanField(default=False)
+    billing_address = models.ForeignKey(
+        Address, related_name='billing_address', on_delete=models.SET_NULL, blank=True, null=True)
+    shipping_address = models.ForeignKey(
+        Address, related_name='shipping_address', on_delete=models.SET_NULL, blank=True, null=True)
+    payment_option = models.CharField(
+        max_length=20, choices=PAYMENT_CHOICES, default='stripe')
     ordered_date = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -64,6 +89,9 @@ class Order(models.Model):
 
     def __str__(self):
         return f'{self.product.name} - {self.quantity}'
+
+    def price(self):
+        return self.product.price * self.quantity
 
 
 class Cart(models.Model):

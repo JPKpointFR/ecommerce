@@ -11,5 +11,10 @@ urlpatterns = [
     path('product/<str:product_slug>/add-to-cart/',
          views.add_to_cart, name='add-to-cart'),
     path('cart/', views.cart, name='cart'),
+    path('update-cart/<slug:product_slug>/',
+         views.update_cart, name='update_cart'),
+    path('delete-from-cart/<slug:product_slug>/',
+         views.delete_from_cart, name='delete_from_cart'),
     path('cart/delete/', views.delete_cart, name='delete_cart'),
+    path('checkout/', views.checkout, name='checkout'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
