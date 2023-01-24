@@ -1,44 +1,70 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+
     <title>KINI</title>
 </head>
 
 <body>
-    <nav>
-        <a href="{% url 'shop' %}">
-            <h1>KINI</h1>
-        </a>
-        {% if user.is_authenticated %}
-        <p>{{user.username}}</p>
+    <header>
+        <nav class="navbar">
+            <ul class="navbar_ul">
 
-        <a href="{% url 'logout' %}">
-            <h4>logout</h4>
-        </a>
-        {% else %}
-        <a href="{% url 'login' %}">
-            <h4>login</h4>
-        </a>
-        <a href="{% url 'signup' %}">
-            <h4>sign up</h4>
-        </a>
-        {% endif %}
+                <li class="navbar_item un">
+                    <a href="{% url 'shop' %}">
+                        <h1>KINI</h1>
+                    </a>
+                </li>
 
-        {% if user.cart %}
-        <a href="{% url 'cart' %}">
-            <h2>CART({{ user.cart.orders.count }})</h2>
-        </a>
-        {% endif %}
-    </nav>
+                {% if user.is_authenticated %}
+                <li class="navbar_item deux">
+                    <h4>{{user.username}}</h4>
+                </li>
 
+                <li class="navbar_item trois">
+                    <a href="{% url 'logout' %}">
+                        <h4>logout</h4>
+                    </a>
+                </li>
 
-    {% block content %}
-    {% endblock content %}
+                {% else %}
+                <li class="navbar_item quatres">
+                    <a href="{% url 'login' %}">
+                        <h4>login</h4>
+                    </a>
+                </li>
 
+                <li class="navbar_item ">
+                    <a href="{% url 'signup' %}">
+                        <h4>sign up</h4>
+                    </a>
+                </li>
+                {% endif %}
+
+                {% if user.cart %}
+                <li class="navbar_item ">
+                    <a href="{% url 'cart' %}">
+                        <h2>CART({{ user.cart.orders.count }})</h2>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+    <footer>
+        {% block footer %}
+        {% endblock %}
+    </footer>
 </body>
 
 </html>

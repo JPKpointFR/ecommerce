@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1> Login page </h1>
-<form method="POST">
-    {% csrf_token %}
-    <p>
-        <label for="username">username</label>
-        <input type="text" id="username" name="username">
-    </p>
-    <p>
-        <label for="password">password</label>
-        <input type="password" id="password" name="password">
-    </p>
-    <input type="submit" placeholder="login">
-</form>
-
+<div>
+    <h1> Login page </h1>
+    <form method="POST">
+        {% csrf_token %}
+        <p>
+            <label for="username">username</label>
+            <input type="text" id="username" name="username">
+        </p>
+        <p>
+            <label for="password">password</label>
+            <input type="password" id="password" name="password">
+        </p>
+        <input type="submit" placeholder="login">
+    </form>
+</div>
 {% endblock %}

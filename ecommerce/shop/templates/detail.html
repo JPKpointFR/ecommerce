@@ -1,19 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row">
-    <div>
-        <img src="{{ shop_products.image.url }}" alt="{{shop_products.name}}">
+<div class="detail">
+    <div class="detail_div_img">
+        <img style="max-width: 250px;" src="{{ shop_products.image.url }}" alt="{{shop_products.name}}">
     </div>
-    <div>{{shop_products.name}}</div>
-    <div>{{shop_products.price}} €</div>
-    <div>{{shop_products.description}}</div>
+    <p class="detail_title">{{shop_products.name}}</p>
+    <p class="detail_price">{{shop_products.price}} €</p>
+    <p class="detail_description>{{shop_products.description}} </p>
     {% if user.is_authenticated %}
-    <div><a href="{% url 'add-to-cart' shop_products.slug %}"><button>add to cart</button></a></div>
-    {% else %}
-    <div>
-        <p>Veuillez créer un compte</p>
-    </div>
-    {% endif %}
+    
+    <a class='add_to_cart' href=" {% url 'add-to-cart' shop_products.slug %}">
+        <button>add to cart</button>
+        </a>
+</div>
+{% else %}
+<div>
+    <p>Veuillez créer un compte</p>
+</div>
+{% endif %}
 </div>
 {% endblock content %}

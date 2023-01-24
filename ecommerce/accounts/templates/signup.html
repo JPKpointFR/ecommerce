@@ -1,22 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1> Account creation </h1>
-<form method="POST">
-    {% csrf_token %}
-    <p>
-        <label for="username">username</label>
-        <input type="text" id="username" name="username" required>
-    </p>
-    <p>
-        <label for="email">email</label>
-        <input type="email" id="email" name="email" required>
-    </p>
-    <p>
-        <label for="password">password</label>
-        <input type="password" id="password" name="password" required>
-    </p>
-    <input type="submit" placeholder="create">
-</form>
-
+<div>
+    <h1> Account creation </h1>
+    <form method="POST">
+        {% csrf_token %}
+        <p>
+            <label for="username">username</label>
+            <input type="text" id="username" name="username" required>
+        </p>
+        <p>
+            <label for="email">email</label>
+            <input type="email" id="email" name="email" required>
+        </p>
+        <p>
+            <label for="password">password</label>
+            <input type="password" id="password" name="password" required>
+        </p>
+        <input type="submit" placeholder="create">
+    </form>
+</div>
 {% endblock %}

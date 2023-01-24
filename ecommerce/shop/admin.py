@@ -11,7 +11,7 @@ class AdminProduct(admin.ModelAdmin):
 
 
 class AdminOrder(admin.ModelAdmin):
-    list_display = ('product', 'quantity', 'ordered_date',)
+    list_display = ('user', 'quantity', 'ordered', 'ordered_date',)
 
 
 class AdminCart(admin.ModelAdmin):

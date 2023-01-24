@@ -80,7 +80,7 @@ def checkout(request):
     orders = Order.objects.filter(user=request.user, ordered=False)
     if request.method == 'POST':
         # Traitez les données du formulaire
-        form = OrderForm(request.POST)
+        form = OrderForm(request.POST or None)
         if form.is_valid():
             # Enregistrez les informations de commande en base de données
             order = form.save(commit=False)

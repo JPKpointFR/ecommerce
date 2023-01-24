@@ -42,46 +42,18 @@ class Product(models.Model):
         return reverse('product-detail', kwargs={'product_slug': self.slug})
 
 
-ADDRESS_CHOICES = [
-    ('B', 'Billing'),
-    ('S', 'Shipping'),
-]
-
-
-class Address(models.Model):
-    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    street_address = models.CharField(max_length=100)
-    apartment_address = models.CharField(max_length=100)
-    country = models.CharField(max_length=100)
-    zip = models.CharField(max_length=100)
-    address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES)
-    default = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.user.username
-
-    class Meta:
-        verbose_name_plural = 'Addresses'
-
-
-PAYMENT_CHOICES = [
-    ('stripe', 'Stripe'),
-    ('paypal', 'Paypal'),
-]
-
-
 class Order(models.Model):
     """ Modèle représentant une commande passée par un client sur le site """
     user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     ordered = models.BooleanField(default=False)
-    billing_address = models.ForeignKey(
-        Address, related_name='billing_address', on_delete=models.SET_NULL, blank=True, null=True)
-    shipping_address = models.ForeignKey(
-        Address, related_name='shipping_address', on_delete=models.SET_NULL, blank=True, null=True)
-    payment_option = models.CharField(
-        max_length=20, choices=PAYMENT_CHOICES, default='stripe')
+    country = models.CharField(max_length=100)
+    billing_address = models.CharField(
+        max_length=201)
+    shipping_address = models.CharField(
+        max_length=200)
     ordered_date = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -96,7 +68,7 @@ class Order(models.Model):
 
 class Cart(models.Model):
     user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    orders = models.ManyToManyField(Order)
+    orders = models.ManyToManyField(Order, )
 
     def __str__(self):
         return f'{self.user.username}'
